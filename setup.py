@@ -37,7 +37,8 @@ setup(
         'setuptools',
         'requests',
     ],
-    entry_points="""
-    # -*- Entry points: -*-
-    """,
+    entry_points={
+        'console_scripts': [
+            'check_graphite = check.graphite.script:main',
+        ]},
 )
