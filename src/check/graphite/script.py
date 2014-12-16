@@ -7,12 +7,12 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
+from StringIO import StringIO
 import argparse
 import gzip
 import operator
 import requests
 import sys
-import StringIO
 
 
 def check_graphite():
