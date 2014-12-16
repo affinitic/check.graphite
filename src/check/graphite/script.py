@@ -13,7 +13,7 @@ import sys
 import operator
 
 
-def main():
+def check_graphite():
     parser = argparse.ArgumentParser()
     parser.add_argument('host', type=str,
                         help='Graphite host e.g. http://host.com/render')

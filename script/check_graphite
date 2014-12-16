@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+# coding=utf-8
+
+from check.graphite import check_graphite
+
+
+check_graphite()
