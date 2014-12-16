@@ -1,0 +1,7 @@
+include MANIFEST.in
+include version.txt
+include README.rst
+include CHANGES.rst
+include CONTRIBUTORS.rst
+include script/check_graphite
+graft doc
