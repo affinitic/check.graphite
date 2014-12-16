@@ -8,9 +8,11 @@ Copyright by Affinitic sprl
 """
 
 import argparse
+import gzip
+import operator
 import requests
 import sys
-import operator
+import StringIO
 
 
 def check_graphite():
@@ -43,10 +45,14 @@ class CheckGraphite(object):
         self.op = operator.ge
         if self.critical < self.warning:
             self.op = operator.le
-            self.order.reverse()
+            self.status.reverse()
 
     def process(self):
-        result = requests.get(self.url).json()
+        req = requests.get(self.url)
+        try:
+            result = req.json()
+        except TypeError:
+            result = self.handle_gzip_content(req.raw.read())
         if not result:
             return 3, 'UNKNOWN - no data'
         if self.name is None:
@@ -64,6 +70,12 @@ class CheckGraphite(object):
                         '%s - %s=%s' % (status.upper(), self.name, avg))
         return 0, 'OK - %s=%s' % (self.name, avg)
 
+    @staticmethod
+    def handle_gzip_content(content):
+        buffer = StringIO(content)
+        f = gzip.GzipFile(fileobj=buffer)
+        return f.read()
+
     @property
     def url(self):
         url_format = '%(host)s?target=%(metric)s&from=-%(timeframe)s&format=json'
@@ -71,5 +83,4 @@ class CheckGraphite(object):
 
     @staticmethod
     def get_average(values):
-        print values
         return sum(values) / len(values)
