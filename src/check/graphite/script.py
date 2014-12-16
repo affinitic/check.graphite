@@ -10,6 +10,7 @@ Copyright by Affinitic sprl
 from StringIO import StringIO
 import argparse
 import gzip
+import json
 import operator
 import requests
 import sys
@@ -48,11 +49,10 @@ class CheckGraphite(object):
             self.status.reverse()
 
     def process(self):
-        req = requests.get(self.url)
         try:
-            result = req.json()
-        except TypeError:
-            result = self.handle_gzip_content(req.raw.read())
+            result = json.loads(requests.get(self.url).content)
+        except ValueError:
+            result = None
         if not result:
             return 3, 'UNKNOWN - no data'
         if self.name is None:
