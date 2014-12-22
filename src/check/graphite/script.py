@@ -78,7 +78,8 @@ class CheckGraphite(object):
     def process_result(self, result):
         if len(result.get('datapoints', [])) == 0:
             return 3, 'no valid datapoints'
-        values = [d[0] for d in result.get('datapoints') if d[0]]
+        values = [d[0] for d in result.get('datapoints')
+                  if d[0] not in (None, '')]
         avg = values and self.get_average(values) or 0
         name = result.get('target').split('.')[-1]
         for status in self.status:
