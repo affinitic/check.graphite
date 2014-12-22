@@ -8,19 +8,20 @@ Copyright by Affinitic sprl
 """
 
 from StringIO import StringIO
-import argparse
 import gzip
 import json
 import operator
 import requests
 import sys
 
+from check.graphite.parser import ArgumentParser
+
 
 def check_graphite():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('host', type=str,
+    parser = ArgumentParser()
+    parser.add_argument('-H', '--host', type=str,
                         help='Graphite host e.g. http://host.com/render')
-    parser.add_argument('metrics', type=str,
+    parser.add_argument('-m', '--metrics', type=str,
                         help='metric names separate by a comma')
     parser.add_argument('-n', '--name', type=str, default='undefined')
     parser.add_argument('-t', '--timeframe', type=str, default='30seconds')
