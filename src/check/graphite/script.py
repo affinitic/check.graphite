@@ -63,7 +63,7 @@ class CheckGraphite(object):
         if len(result.get('datapoints', [])) == 0:
             return 3, 'UNKNOWN - no valid datapoints'
         values = [d[0] for d in result.get('datapoints') if d[0]]
-        avg = self.get_average(values)
+        avg = values and self.get_average(values) or 0
         for status in self.status:
             if self.op(avg, getattr(self, status)):
                 return (self.status_match.get(status),
