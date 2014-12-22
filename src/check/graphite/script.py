@@ -84,7 +84,7 @@ class CheckGraphite(object):
         for status in self.status:
             if self.op(avg, getattr(self, status)):
                 return (self.status_match.get(status),
-                        '%s=%s' % (status.upper(), name, avg))
+                        '%s=%s' % (name, avg))
         return 0, '%s=%s' % (name, avg)
 
     @staticmethod
